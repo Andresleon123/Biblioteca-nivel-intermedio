@@ -4,6 +4,8 @@ import com.biblioteca.util.Constantes;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Comparator;
+import java.util.stream.Collectors;
 
 /**
  * Clase que almacena y recupera libros.
@@ -65,8 +67,38 @@ public class Biblioteca implements IBiblioteca {
         throw new IllegalArgumentException(Constantes.CONFIRMACION_DE_ACTUALIZACION);
     }
 
+
     @Override
     public List<Libro> listarLibros() {
         return new ArrayList<>(libros); // Devuelve una copia para evitar modificaciones externas.
     }
-}
+    @Override
+    public long contarLibrosPorAutor(String autor) {
+        return libros.stream()
+                .filter(libro -> libro.getAutor().equalsIgnoreCase(autor))
+                .count();
+    }
+
+    @Override
+    public List<Libro> filtrarLibrosPorGenero(String genero) {
+        return libros.stream()
+                .filter(libro -> libro.getGenero().equalsIgnoreCase(genero)) // Asegúrate de que el libro tenga un método getGenero()
+                .sorted(Comparator.comparing(Libro::getNombre)) // Ordenar alfabéticamente
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Libro> listarLibrosDisponibles() {
+        return libros.stream()
+                .filter(Libro::isDisponible) // Asegúrate de que el libro tenga un método isDisponible()
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Libro> listarLibrosNoDisponibles() {
+        return libros.stream()
+                .filter(libro -> !libro.isDisponible())
+                .collect(Collectors.toList());
+    }
+    }
+

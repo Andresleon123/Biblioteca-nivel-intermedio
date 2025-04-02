@@ -19,4 +19,12 @@ public interface IBiblioteca {// Se encarga de almacenar
     void actualizarLibro(Libro libro);
 
     List<Libro> listarLibros();
+
+    long contarLibrosPorAutor(String autor);//Contara cuantos libros hay de un autor en espesifico
+
+    List<Libro> filtrarLibrosPorGenero(String genero);//devolverá una lista de libros que coincidan con el género especificado
+
+    List<Libro> listarLibrosDisponibles();
+
+    List<Libro> listarLibrosNoDisponibles();
 }

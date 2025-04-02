@@ -14,10 +14,10 @@ public class GestorBiblioteca {
         this.biblioteca = biblioteca;
     }
 
-    public String agregarLibro(String nombre, String autor, String editorial, int fecha) {
+    public String agregarLibro(String nombre, String autor, String editorial, int fechaPublicacion, String genero, boolean disponible) {
         try {
-            validarDatosLibro(nombre, autor, editorial, fecha);
-            biblioteca.agregarLibro(new Libro(nombre, autor, editorial, fecha));
+            validarDatosLibro(nombre, autor, editorial, fechaPublicacion );
+            biblioteca.agregarLibro(new Libro(nombre, autor, editorial, fechaPublicacion, genero, disponible));
             return Constantes.EXITO_AGREGAR_LIBRO;
         } catch (IllegalArgumentException e) {
             return Constantes.ERROR_INESPERADO;

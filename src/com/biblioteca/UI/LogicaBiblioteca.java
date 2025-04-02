@@ -19,15 +19,19 @@ public class LogicaBiblioteca {
         JOptionPane.showMessageDialog(null, mensaje);
     }
 
-    public void agregarLibro(JTextField txtNombre, JTextField txtAutor, JTextField txtEditorial, JTextField txtfecha, JTextArea textArea) {
+    public void agregarLibro(JTextField txtNombre, JTextField txtAutor, JTextField txtEditorial, JTextField txtfecha, JTextField txtGenero, JCheckBox chkDisponible, JTextArea textArea) {
         try {
             String nombre = txtNombre.getText().trim();
             String autor = txtAutor.getText().trim();
             String editorial = txtEditorial.getText().trim();
             int fecha = Integer.parseInt(txtfecha.getText().trim());
-            String resultado = gestor.agregarLibro(nombre, autor, editorial, fecha);
+            String genero = txtGenero.getText().trim(); // Obtener el género
+            boolean disponible = chkDisponible.isSelected(); // Obtener la disponibilidad
+
+            // Crear el libro con los nuevos atributos
+            String resultado = gestor.agregarLibro(nombre, autor, editorial, fecha, genero, disponible);
             mostrarMensaje(resultado);
-            limpiarCampos(txtNombre, txtAutor, txtEditorial, txtfecha);
+            limpiarCampos(txtNombre, txtAutor, txtEditorial, txtfecha, txtGenero, chkDisponible);
         } catch (NumberFormatException e) {
             mostrarMensaje(Constantes.ERROR_NUMERO_VALIDO);
         } catch (Exception e) {
@@ -145,10 +149,12 @@ public class LogicaBiblioteca {
         }
     }
 
-    private void limpiarCampos(JTextField txtNombre, JTextField txtAutor, JTextField txtEditorial, JTextField txtfecha) {
+    private void limpiarCampos(JTextField txtNombre, JTextField txtAutor, JTextField txtEditorial, JTextField txtfecha, JTextField txtGenero, JCheckBox chkDisponible) {
         txtNombre.setText("");
         txtAutor.setText("");
         txtEditorial.setText("");
         txtfecha.setText("");
+        txtGenero.setText(""); // Limpiar el campo de género
+        chkDisponible.setSelected(false); // Reiniciar el JCheckBox
     }
 }

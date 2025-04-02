@@ -8,30 +8,50 @@ import com.biblioteca.util.Constantes;
  */
 public class Libro extends RecursoBiblioteca {
     private String editorial;
+    private String genero; // Nuevo atributo para el género
+    private boolean disponible; // Nuevo atributo para la disponibilidad
 
-    public Libro(String nombre, String autor, String editorial, int fechaPublicacion) {
-        //se utiliza para llamar al constructor de la clase padre
+    public Libro(String nombre, String autor, String editorial, int fechaPublicacion, String genero, boolean disponible) {
+        // Se utiliza para llamar al constructor de la clase padre
         super(validarCampo(nombre, "nombre"), validarCampo(autor, "autor"), validarFecha(fechaPublicacion));
         this.editorial = validarCampo(editorial, "editorial");
+        this.genero = validarCampo(genero, "género"); // Inicializar el género
+        this.disponible = disponible; // Inicializar la disponibilidad
     }
 
     public String getEditorial() {
         return editorial;
     }
 
+    public String getGenero() {
+        return genero; // Método para obtener el género
+    }
+
+    public boolean isDisponible() {
+        return disponible; // Método para verificar si el libro está disponible
+    }
+
     public void setEditorial(String editorial) {
         this.editorial = editorial;
     }
 
-    @Override//representacion de caracteres tipo String
+    public void setGenero(String genero) {
+        this.genero = genero; // Método para establecer el género
+    }
+
+    public void setDisponible(boolean disponible) {
+        this.disponible = disponible; // Método para establecer la disponibilidad
+    }
+
+    @Override // Representación de caracteres tipo String
     public String toString() {
-        return super.toString() + ", Editorial: " + editorial;
+        return super.toString() + ", Editorial: " + editorial + ", Género: " + genero + ", Disponible: " + disponible;
     }
 
     // Métodos de validación
     private static String validarCampo(String campo, String nombreCampo) {
         if (campo == null || campo.trim().isEmpty()) {
-            //Manejo de excepsiones
+            // Manejo de excepciones
             throw new IllegalArgumentException("Error: El campo '" + nombreCampo + "' no puede estar vacío o nulo.");
         }
         return campo;
