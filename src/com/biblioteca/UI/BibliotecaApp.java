@@ -1,3 +1,4 @@
+
 package com.biblioteca.UI;
 
 import javax.swing.*;
@@ -5,6 +6,7 @@ import java.awt.*;
 
 public class BibliotecaApp extends JFrame {
     private JButton btnAgregar, btnListar, btnBuscar, btnActualizar, btnEliminar;
+    private JButton btnContarPorAutor, btnFiltrarPorGenero, btnMostrarNoDisponibles;
     private JTextArea textArea;
     private JTextField txtNombre, txtAutor, txtEditorial, txtFecha, txtGenero;
     private LogicaBiblioteca logica;
@@ -23,21 +25,24 @@ public class BibliotecaApp extends JFrame {
 
     private void configurarVentana() {
         setTitle("Biblioteca");
-        setSize(600, 400);
+        setSize(800, 500);
         setLocationRelativeTo(null);
+        setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     private JPanel crearPanel() {
-        return new JPanel(new GridBagLayout());
+        JPanel panel = new JPanel(new GridBagLayout());
+        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Márgenes uniformes
+        return panel;
     }
 
     private void inicializarComponentes() {
         gbc = new GridBagConstraints();
-        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.insets = new Insets(5, 5, 5, 5); // Espaciado uniforme
 
         txtNombre = new JTextField(15);
-        txtAutor = new JTextField(15); // Ajuste para el checkbox
+        txtAutor = new JTextField(15);
         txtEditorial = new JTextField(15);
         txtFecha = new JTextField(15);
         txtGenero = new JTextField(15);
@@ -49,6 +54,10 @@ public class BibliotecaApp extends JFrame {
         btnBuscar = new JButton("Buscar");
         btnActualizar = new JButton("Actualizar");
         btnEliminar = new JButton("Eliminar");
+
+        btnContarPorAutor = new JButton("Contar por Autor");
+        btnFiltrarPorGenero = new JButton("Filtrar por Género");
+        btnMostrarNoDisponibles = new JButton("Mostrar No Disponibles");
     }
 
     private void agregarComponentes(JPanel panel) {
@@ -58,7 +67,7 @@ public class BibliotecaApp extends JFrame {
         agregarCampo(panel, "Año:", txtFecha, 3);
         agregarCampo(panel, "Género:", txtGenero, 4);
         agregarTextArea(panel);
-        crearBotones(panel);
+        crearPanelBotones(panel);
     }
 
     private void agregarCampo(JPanel panel, String label, JComponent component, int row) {
@@ -80,31 +89,38 @@ public class BibliotecaApp extends JFrame {
     }
 
     private void agregarTextArea(JPanel panel) {
-        textArea = new JTextArea(10, 40);
+        textArea = new JTextArea(10, 50);
         textArea.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(textArea);
+
         gbc.gridx = 0;
         gbc.gridy = 5;
         gbc.gridwidth = 3;
-        gbc.fill = GridBagConstraints.BOTH;// se coloca en la misma fila de autor pero se crea una columna independiente
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.fill = GridBagConstraints.BOTH;
         panel.add(scrollPane, gbc);
     }
 
-    private void crearBotones(JPanel panel) {
+    private void crearPanelBotones(JPanel panel) {
+        JPanel panelBotones = new JPanel(new GridLayout(2, 4, 10, 10)); // 2 filas, 4 columnas con espacio
+
+        // Agregamos los botones al panel
+        panelBotones.add(btnAgregar);
+        panelBotones.add(btnBuscar);
+        panelBotones.add(btnActualizar);
+        panelBotones.add(btnEliminar);
+        panelBotones.add(btnListar);
+        panelBotones.add(btnContarPorAutor);
+        panelBotones.add(btnFiltrarPorGenero);
+        panelBotones.add(btnMostrarNoDisponibles);
+
+        // Ubicación del panel en la interfaz
         gbc.gridy = 6;
         gbc.gridx = 0;
-        gbc.gridwidth = 1;
-        gbc.fill = GridBagConstraints.HORIZONTAL;// se coloca en la misma fila de autor pero se crea una columna independiente
-
-        panel.add(btnAgregar, gbc);
-        gbc.gridx = 1;
-        panel.add(btnBuscar, gbc);
-        gbc.gridx = 2;
-        panel.add(btnActualizar, gbc);
-        gbc.gridx = 3;
-        panel.add(btnEliminar, gbc);
-        gbc.gridx = 4;
-        panel.add(btnListar, gbc);
+        gbc.gridwidth = 3;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panel.add(panelBotones, gbc);
     }
 
     private void agregarAcciones() {
@@ -113,6 +129,9 @@ public class BibliotecaApp extends JFrame {
         btnBuscar.addActionListener(e -> logica.buscarLibro(textArea));
         btnActualizar.addActionListener(e -> logica.actualizarLibro(txtNombre, textArea));
         btnEliminar.addActionListener(e -> logica.eliminarLibro(textArea));
+        btnContarPorAutor.addActionListener(e -> logica.contarLibrosPorAutor(textArea));
+        btnFiltrarPorGenero.addActionListener(e -> logica.filtrarLibrosPorGenero(textArea));
+        btnMostrarNoDisponibles.addActionListener(e -> logica.mostrarLibrosNoDisponibles(textArea));
     }
 
     public static void main(String[] args) {

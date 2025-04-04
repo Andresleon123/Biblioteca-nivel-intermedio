@@ -11,8 +11,10 @@ import java.util.List;
 public class LogicaBiblioteca {
     private GestorBiblioteca gestor;
 
+
     public LogicaBiblioteca() {
         gestor = new GestorBiblioteca(new Biblioteca());
+
     }
 
     private void mostrarMensaje(String mensaje) {
@@ -32,6 +34,9 @@ public class LogicaBiblioteca {
             String resultado = gestor.agregarLibro(nombre, autor, editorial, fecha, genero, disponible);
             mostrarMensaje(resultado);
             limpiarCampos(txtNombre, txtAutor, txtEditorial, txtfecha, txtGenero, chkDisponible);
+            mostrarLibrosDisponibles(textArea);
+            mostrarLibrosNoDisponibles(textArea);
+
         } catch (NumberFormatException e) {
             mostrarMensaje(Constantes.ERROR_NUMERO_VALIDO);
         } catch (Exception e) {
@@ -59,8 +64,6 @@ public class LogicaBiblioteca {
         String criterio = (String) JOptionPane.showInputDialog(
                 null, Constantes.BUSQUEDA,
                 "Buscar libro", JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[0]);
-
-        if (criterio == null);
 
         String valorBuscado = JOptionPane.showInputDialog(null, Constantes.BUSQUEDA).trim();
         if (valorBuscado.isEmpty()) {
@@ -148,6 +151,50 @@ public class LogicaBiblioteca {
             listarLibros(textArea);
         }
     }
+    public void mostrarLibrosDisponibles(JTextArea textArea) {
+        List<Libro> librosDisponibles = gestor.listarLibrosDisponibles();
+        textArea.setText("Libros Disponibles:\n");
+        for (Libro libro : librosDisponibles) {
+            textArea.append(libro.toString() + "\n");
+        }
+    }
+    public void mostrarLibrosNoDisponibles(JTextArea textArea) {
+        List<Libro> librosNoDisponibles = gestor.listarLibrosNoDisponibles();
+        textArea.setText("Libros No Disponibles:\n");
+        if (librosNoDisponibles.isEmpty()) {
+            textArea.append("No hay libros no disponibles.\n");
+        } else {
+            for (Libro libro : librosNoDisponibles) {
+                textArea.append(libro.toString() + "\n");
+            }
+        }
+    }
+    public void contarLibrosPorAutor(JTextArea textArea) {
+        String autor = JOptionPane.showInputDialog("Ingrese el nombre del autor:");
+        if (autor != null && !autor.trim().isEmpty()) {
+            long cantidad = gestor.contarLibrosPorAutor(autor);
+            textArea.setText("Cantidad de libros de " + autor + ": " + cantidad);
+        } else {
+            JOptionPane.showMessageDialog(null, Constantes.ERROR_CAMPOS_VACIOS);
+        }
+    }
+    public void filtrarLibrosPorGenero(JTextArea textArea) {
+        String genero = JOptionPane.showInputDialog("Ingrese el género:");
+        if (genero != null && !genero.trim().isEmpty()) {
+            List<Libro> librosFiltrados = gestor.filtrarLibrosPorGenero(genero);
+            textArea.setText("Libros del género " + genero + ":\n");
+            if (librosFiltrados.isEmpty()) {
+                textArea.append("No se encontraron libros de este género.\n");
+            } else {
+                for (Libro libro : librosFiltrados) {
+                    textArea.append(libro.toString() + "\n");
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, Constantes.ERROR_CAMPOS_VACIOS);
+        }
+    }
+
 
     private void limpiarCampos(JTextField txtNombre, JTextField txtAutor, JTextField txtEditorial, JTextField txtfecha, JTextField txtGenero, JCheckBox chkDisponible) {
         txtNombre.setText("");

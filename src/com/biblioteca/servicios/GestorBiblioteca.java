@@ -130,4 +130,22 @@ public class GestorBiblioteca {
         }
         return libro;
     }
+    public long contarLibrosPorAutor(String autor) {
+        return biblioteca.contarLibrosPorAutor(autor);
+    }
+
+    // Método para filtrar libros por género
+    public List<Libro> filtrarLibrosPorGenero(String genero) {
+        return biblioteca.filtrarLibrosPorGenero(genero);
+    }
+
+    // Método para listar libros disponibles
+    public List<Libro> listarLibrosDisponibles() {
+        return biblioteca.listarLibrosDisponibles();
+    }
+
+    // Método para listar libros no disponibles
+    public List<Libro> listarLibrosNoDisponibles() {
+        return biblioteca.listarLibrosNoDisponibles();
+    }
 }
