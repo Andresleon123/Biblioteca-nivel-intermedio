@@ -14,9 +14,13 @@ public class GestorBiblioteca {
         this.biblioteca = biblioteca;
     }
 
+    public IBiblioteca getBiblioteca() {
+        return biblioteca;
+    }
+
     public String agregarLibro(String nombre, String autor, String editorial, int fechaPublicacion, String genero, boolean disponible) {
         try {
-            validarDatosLibro(nombre, autor, editorial, fechaPublicacion );
+            validarDatosLibro(nombre, autor, editorial, fechaPublicacion);
             biblioteca.agregarLibro(new Libro(nombre, autor, editorial, fechaPublicacion, genero, disponible));
             return Constantes.EXITO_AGREGAR_LIBRO;
         } catch (IllegalArgumentException e) {
@@ -24,7 +28,7 @@ public class GestorBiblioteca {
         }
     }
 
-        public List<Libro> buscarLibrosPorNAEF(String desplegableDeBusqueda, String valorDeBusquedaNAEF) {
+    public List<Libro> buscarLibrosPorNAEF(String desplegableDeBusqueda, String valorDeBusquedaNAEF) {
         try {
             if (esCampoInvalido(valorDeBusquedaNAEF)) {
                 throw new IllegalArgumentException(Constantes.ERROR_CAMPOS_VACIOS);
@@ -118,7 +122,7 @@ public class GestorBiblioteca {
                 // Manejo del caso por defecto
                 System.out.println("Criterio de búsqueda no válido: " + desplegableDeBusqueda);
                 return false;
-                // O puedes lanzar una excepción si prefieres
+            // O puedes lanzar una excepción si prefieres
         }
     }
 
@@ -130,6 +134,7 @@ public class GestorBiblioteca {
         }
         return libro;
     }
+
     public long contarLibrosPorAutor(String autor) {
         return biblioteca.contarLibrosPorAutor(autor);
     }
@@ -147,5 +152,6 @@ public class GestorBiblioteca {
     // Método para listar libros no disponibles
     public List<Libro> listarLibrosNoDisponibles() {
         return biblioteca.listarLibrosNoDisponibles();
+
     }
 }

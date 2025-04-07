@@ -6,6 +6,7 @@ import com.biblioteca.servicios.GestorBiblioteca;
 import com.biblioteca.util.Constantes;
 
 import javax.swing.*;
+import java.util.Comparator;
 import java.util.List;
 
 public class LogicaBiblioteca {
@@ -50,7 +51,11 @@ public class LogicaBiblioteca {
 
         if (libros == null || libros.isEmpty()) {
             textArea.append("No hay libros en la biblioteca.\n");
+            // Salir del método si no hay libros
         }
+
+        // Ordenar la lista de libros por nombre
+        libros.sort(Comparator.comparing(Libro::getNombre));
 
         StringBuilder listaLibros = new StringBuilder();
         for (Libro libro : libros) {
@@ -203,5 +208,20 @@ public class LogicaBiblioteca {
         txtfecha.setText("");
         txtGenero.setText(""); // Limpiar el campo de género
         chkDisponible.setSelected(false); // Reiniciar el JCheckBox
+    }
+    public void guardarLibros(JTextArea textArea) {
+        String nombreArchivo = JOptionPane.showInputDialog("Ingrese el nombre del archivo para guardar:");
+        if (nombreArchivo != null && !nombreArchivo.trim().isEmpty()) {
+            gestor.getBiblioteca().guardarLibrosEnArchivo(nombreArchivo); // Llamada al método
+            mostrarMensaje("Libros guardados exitosamente en " + nombreArchivo);
+        }
+    }
+
+    public void cargarLibros(JTextArea textArea) {
+        String nombreArchivo = JOptionPane.showInputDialog("Ingrese el nombre del archivo para cargar:");
+        if (nombreArchivo != null && !nombreArchivo.trim().isEmpty()) {
+            gestor.getBiblioteca().cargarLibrosDesdeArchivo(nombreArchivo); // Llamada al método
+            mostrarMensaje("Libros cargados exitosamente desde " + nombreArchivo);
+        }
     }
 }
