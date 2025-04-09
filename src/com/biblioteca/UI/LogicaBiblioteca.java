@@ -222,6 +222,7 @@ public class LogicaBiblioteca {
         if (nombreArchivo != null && !nombreArchivo.trim().isEmpty()) {
             gestor.getBiblioteca().cargarLibrosDesdeArchivo(nombreArchivo); // Llamada al método
             mostrarMensaje("Libros cargados exitosamente desde " + nombreArchivo);
+            listarLibros(textArea); // Listar los libros después de cargar
         }
     }
 }

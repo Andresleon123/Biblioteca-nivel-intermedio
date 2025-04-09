@@ -14,11 +14,12 @@ import java.util.stream.Collectors;
  */
 public class Biblioteca implements IBiblioteca {
     private List<Libro> libros;
+    private GestorPersistencia gestorPersistencia;
 
-    //Este es el constructor por defecto o constructor vacío.
-    //Crear una biblioteca y luego agregar libros individualmente
+    // Constructor por defecto
     public Biblioteca() {
         this.libros = new ArrayList<>();
+        this.gestorPersistencia = new GestorPersistencia(); // Inicialización correcta aquí
     }
 
     /**
@@ -26,6 +27,7 @@ public class Biblioteca implements IBiblioteca {
      */
     public Biblioteca(List<Libro> libros) {
         this.libros = (libros != null) ? new ArrayList<>(libros) : new ArrayList<>();
+        this.gestorPersistencia = new GestorPersistencia(); // Inicialización correcta aquí
     }
 
     public void agregarLibro(Libro libro) {
@@ -105,37 +107,14 @@ public class Biblioteca implements IBiblioteca {
                 .collect(Collectors.toList());
     }
 
+    @Override
     public void guardarLibrosEnArchivo(String nombreArchivo) {
-        try (BufferedWriter escritor = new BufferedWriter(new FileWriter(nombreArchivo))) {
-            for (Libro libro : libros) {
-                escritor.write(libro.getNombre() + "," + libro.getAutor() + "," + libro.getEditorial() + "," +
-                        libro.getFechaPublicacion() + "," + libro.getGenero() + "," + libro.isDisponible());
-                escritor.newLine();
-            }
-        } catch (IOException e) {
-            System.err.println("Error al guardar los libros: " + e.getMessage());
-        }
+        gestorPersistencia.guardarLibrosEnArchivo(libros, nombreArchivo);
     }
 
+    @Override
     public void cargarLibrosDesdeArchivo(String nombreArchivo) {
-        try (BufferedReader lector = new BufferedReader(new FileReader(nombreArchivo))) {
-            String linea;
-            while ((linea = lector.readLine()) != null) {
-                String[] datosLibro = linea.split(",");
-                if (datosLibro.length == 6) {
-                    String nombre = datosLibro[0];
-                    String autor = datosLibro[1];
-                    String editorial = datosLibro[2];
-                    int fechaPublicacion = Integer.parseInt(datosLibro[3]);
-                    String genero = datosLibro[4];
-                    boolean disponible = Boolean.parseBoolean(datosLibro[5]);
-                    agregarLibro(new Libro(nombre, autor, editorial, fechaPublicacion, genero, disponible));
-                }
-            }
-        } catch (IOException e) {
-            System.err.println("Error al cargar los libros: " + e.getMessage());
-        } catch (IllegalArgumentException e) {
-            System.err.println("Error en los datos del libro: " + e.getMessage());
-        }
+        // Llamar al método del GestorPersistencia para cargar los libros
+        gestorPersistencia.cargarLibrosDesdeArchivo(libros, nombreArchivo);
     }
 }

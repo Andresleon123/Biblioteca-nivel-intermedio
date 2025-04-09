@@ -140,9 +140,6 @@ public class BibliotecaApp extends JFrame {
         panelBotones.add(btnContarPorAutor);
         panelBotones.add(btnFiltrarPorGenero);
         panelBotones.add(btnMostrarNoDisponibles);
-        panelBotones.add(btnGuardar);
-        panelBotones.add(btnCargar);
-
         gbc.gridy = 6;
         gbc.gridx = 0;
         gbc.gridwidth = 3;
