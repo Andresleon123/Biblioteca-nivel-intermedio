@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.biblioteca.BibliotecaTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2025-04-22T16:11:34" hostname="LAPTOP-1Q2OPEL5" time="1.109">
+  <properties/>
+  <testcase name="agregarLibro_DatosValidos_DeberiaAgregar" classname="com.biblioteca.BibliotecaTest" time="1.091"/>
+  <testcase name="agregarLibro_NombreVacio_DeberiaMostrarError" classname="com.biblioteca.BibliotecaTest" time="0.009"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
