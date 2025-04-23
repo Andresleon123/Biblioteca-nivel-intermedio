@@ -61,6 +61,7 @@ public class Libro extends RecursoBiblioteca {
         int fechaActual = java.time.Year.now().getValue();
         if (fecha > fechaActual) {
             throw new IllegalArgumentException(Constantes.ERROR_FECHA_INVALIDO);
+
         }
         return fecha;
     }

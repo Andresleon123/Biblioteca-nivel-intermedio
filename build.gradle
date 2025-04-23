@@ -10,12 +10,20 @@ repositories {
 }
 
 dependencies {
-    testImplementation 'org.testng:testng:7.7.0'
-    testImplementation 'org.mockito:mockito-core:4.11.0'
     implementation 'org.slf4j:slf4j-api:2.0.7'
     implementation 'org.slf4j:slf4j-simple:2.0.7'
+    testImplementation 'org.testng:testng:7.9.0'
+    testImplementation 'org.mockito:mockito-core:5.11.0'
+
 }
 
 test {
     useTestNG()
+    jvmArgs += [
+            "-Dnet.bytebuddy.experimental=true",
+            "-XX:+EnableDynamicAgentLoading"
+    ]
+    testLogging {
+        showStandardStreams = false
+    }
 }

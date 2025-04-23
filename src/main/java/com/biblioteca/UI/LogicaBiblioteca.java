@@ -10,7 +10,7 @@ import java.util.Comparator;
 import java.util.List;
 
 public class LogicaBiblioteca {
-    private GestorBiblioteca gestor;
+    public  GestorBiblioteca gestor;
 
 
     public LogicaBiblioteca() {
@@ -88,6 +88,12 @@ public class LogicaBiblioteca {
             mostrarMensaje(mensaje.toString());
         }
     }
+    public List<Libro> buscarLibroPorCriterio(String criterio, String valorBuscado) {
+        if (valorBuscado == null || valorBuscado.trim().isEmpty()) {
+            throw new IllegalArgumentException(Constantes.ERROR_LIBRO_NO_ENCONTRADO);
+        }
+        return gestor.buscarLibrosPorNAEF(criterio, valorBuscado);
+    }
 
     public void actualizarLibro(JTextField txtNombre, JTextArea textArea) {
         String nombre = txtNombre.getText().trim();
@@ -133,7 +139,7 @@ public class LogicaBiblioteca {
         }
     }
 
-    private void actualizarCampo(String nombre, String nuevoValor, String queCampoActualizara) {
+    public void actualizarCampo(String nombre, String nuevoValor, String queCampoActualizara) {
         switch (queCampoActualizara) {
             case "nombre":
                 gestor.actualizarNombreLibro(nombre, nuevoValor); // Cambiado a 'gestor'
@@ -159,13 +165,7 @@ public class LogicaBiblioteca {
             listarLibros(textArea);
         }
     }
-    public void mostrarLibrosDisponibles(JTextArea textArea) {
-        List<Libro> librosDisponibles = gestor.listarLibrosDisponibles();
-        textArea.setText("Libros Disponibles:\n");
-        for (Libro libro : librosDisponibles) {
-            textArea.append(libro.toString() + "\n");
-        }
-    }
+
     public void mostrarLibrosNoDisponibles(JTextArea textArea) {
         List<Libro> librosNoDisponibles = gestor.listarLibrosNoDisponibles();
         textArea.setText("Libros No Disponibles:\n");
