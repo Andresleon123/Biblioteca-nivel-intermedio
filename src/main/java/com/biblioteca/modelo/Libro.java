@@ -8,8 +8,8 @@ import com.biblioteca.util.Constantes;
  */
 public class Libro extends RecursoBiblioteca {
     private String editorial;
-    private String genero; // Nuevo atributo para el género
-    private boolean disponible; // Nuevo atributo para la disponibilidad
+    private String genero;
+    private boolean disponible;
 
     public Libro(String nombre, String autor, String editorial, int fechaPublicacion, String genero, boolean disponible) {
         // Se utiliza para llamar al constructor de la clase padre
@@ -27,7 +27,7 @@ public class Libro extends RecursoBiblioteca {
         return genero; // Método para obtener el género
     }
 
-    public boolean isDisponible() {
+    public boolean estaDisponible() {
         return disponible; // Método para verificar si el libro está disponible
     }
 
@@ -35,13 +35,6 @@ public class Libro extends RecursoBiblioteca {
         this.editorial = editorial;
     }
 
-    public void setGenero(String genero) {
-        this.genero = genero; // Método para establecer el género
-    }
-
-    public void setDisponible(boolean disponible) {
-        this.disponible = disponible; // Método para establecer la disponibilidad
-    }
 
     @Override // Representación de caracteres tipo String
     public String toString() {

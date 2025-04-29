@@ -31,12 +31,9 @@ public class Biblioteca implements IBiblioteca {
     }
 
     public void agregarLibro(Libro libro) {
-        if (buscarLibroPorNombre(libro.getNombre()) == null) {
-            libros.add(libro);
-        } else {
-            throw new IllegalArgumentException(Constantes.YA_EXISTE_LIBRO);
-        }
+        libros.add(libro);
     }
+
 
     @Override
     public Libro buscarLibroPorNombre(String nombre) {
@@ -69,7 +66,7 @@ public class Biblioteca implements IBiblioteca {
                 break;
             }
         }
-        if (!actualizado) {
+        if (!actualizado) {//niega la variable actualizado
             throw new IllegalArgumentException(Constantes.ERROR_LIBRO_NO_ENCONTRADO);
         }
     }
@@ -96,14 +93,14 @@ public class Biblioteca implements IBiblioteca {
     @Override
     public List<Libro> listarLibrosDisponibles() {
         return libros.stream()
-                .filter(Libro::isDisponible) // Asegúrate de que el libro tenga un método isDisponible()
+                .filter(Libro::estaDisponible) // Asegúrate de que el libro tenga un método isDisponible()
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<Libro> listarLibrosNoDisponibles() {
         return libros.stream()
-                .filter(libro -> !libro.isDisponible())
+                .filter(libro -> !libro.estaDisponible())
                 .collect(Collectors.toList());
     }
 

@@ -10,7 +10,7 @@ public class GestorPersistencia {
         try (BufferedWriter escritor = new BufferedWriter(new FileWriter(nombreArchivo))) {
             for (Libro libro : libros) {
                 escritor.write(libro.getNombre() + "," + libro.getAutor() + "," + libro.getEditorial() + "," +
-                        libro.getFechaPublicacion() + "," + libro.getGenero() + "," + libro.isDisponible());
+                        libro.getFechaPublicacion() + "," + libro.getGenero() + "," + libro.estaDisponible());
                 escritor.newLine();
             }
         } catch (IOException e) {
@@ -19,6 +19,8 @@ public class GestorPersistencia {
     }
 
     public void cargarLibrosDesdeArchivo(List<Libro> libros, String nombreArchivo) {
+        //Abre el archivo llamado (nombreArchivo) BufferedReader  lee el archivo linea por linea
+        //FileReader lector de archivo de texto
         try (BufferedReader lector = new BufferedReader(new FileReader(nombreArchivo))) {
             String linea;
             while ((linea = lector.readLine()) != null) {

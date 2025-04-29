@@ -14,7 +14,6 @@ public class Constantes {
     public static final String ACTUALIZAR= "Ingrece el nuevo a corregir";
     public static final String CONFIRMACION_DE_ACTUALIZACION= "Se actualizo correctamente";
     public static final String NOMBRE_LIBRO_A_ELIMINAR= "Ingrese el nombre del libro a eliminar:";
-    public static final String YA_EXISTE_LIBRO= "Error: Ya existe un libro con este nombre.";
     public static final String ERROR_INESPERADO= "Error inesperado: ";
     public static final String NO_SE_ACTUALIZARON_LOS_CAMBIOS= "No se actualizaron los campos";
 }
